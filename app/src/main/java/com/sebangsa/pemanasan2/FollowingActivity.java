@@ -70,13 +70,19 @@ public class FollowingActivity extends AppCompatActivity implements View.OnKeyLi
     protected void onResume() {
         super.onResume();
         if (userList.size() > 0) {
+            Log.i(LOG_TAG, "Users exist on List");
             setAdapter(userList);
         } else {
             RealmResults<UserRealm> users = realmService.getUsers();
             if (users.size() > 0) {
-                Log.i(LOG_TAG, "Users exist");
+                Log.i(LOG_TAG, "Users exist on DB");
+                userList = new ArrayList<UserRealm>();
+                for (UserRealm user : users) {
+                    userList.add(user);
+                }
+                setAdapter(userList);
             } else {
-                Log.i(LOG_TAG, "Users not exist");
+                Log.i(LOG_TAG, "Users not exist on DB");
                 retrieveFollowing();
             }
         }
@@ -90,8 +96,14 @@ public class FollowingActivity extends AppCompatActivity implements View.OnKeyLi
     @Subscribe
     public void onUserRealmEvent(List<UserRealm> users) {
         userList = users;
-        Log.i("FOLLOWINGGG", "Selesai " + users.size());
         setAdapter(users);
+        saveFollowingUsers(users);
+    }
+
+    private void saveFollowingUsers(List<UserRealm> users) {
+        for (UserRealm user : users) {
+            realmService.saveUser(user);
+        }
     }
 
     @Subscribe
