@@ -5,17 +5,21 @@ import android.graphics.Bitmap;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.sebangsa.pemanasan2.R;
 import com.sebangsa.pemanasan2.model.UserRealm;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -27,6 +31,7 @@ public class SebangsaRecyclerViewAdapter extends RecyclerView.Adapter<SebangsaRe
     private List<UserRealm> listUser;
     private LayoutInflater inflater;
     private Context context;
+    private ItemClickCallBack itemClickCallBack;
 
     public SebangsaRecyclerViewAdapter(List list, Context c) {
         inflater = LayoutInflater.from(c);
@@ -60,12 +65,17 @@ public class SebangsaRecyclerViewAdapter extends RecyclerView.Adapter<SebangsaRe
         holder.buttonFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user.isFollow()) {
-                    user.setFollow(false);
-                } else {
-                    user.setFollow(true);
-                }
+                EventBus.getDefault().post(user);
                 setImageButtonUser(user, holder);
+
+            }
+        });
+
+        holder.container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "Posisi : " + position, Toast.LENGTH_SHORT).show();
+                Log.i("FOLLOWING", user.getId() + ", " + user.getUsername() + ", " + user.getBio() + ", " + user.getName() + ", " + user.isFollow() + ", " + user.getMedium() + ", " + user.getFollowing() + ", " + user.getFollowers());
             }
         });
 
@@ -86,6 +96,14 @@ public class SebangsaRecyclerViewAdapter extends RecyclerView.Adapter<SebangsaRe
     @Override
     public int getItemCount() {
         return listUser.size();
+    }
+
+    public void setItemClickCallBack(ItemClickCallBack itemClickCallBack) {
+        this.itemClickCallBack = itemClickCallBack;
+    }
+
+    public interface ItemClickCallBack {
+        void onItemClick(int p);
     }
 
     class SebangsaRecyclerViewHolder extends RecyclerView.ViewHolder {

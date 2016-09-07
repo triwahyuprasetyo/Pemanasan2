@@ -42,6 +42,21 @@ public class RealmService {
         });
     }
 
+    public void updateUser(final UserRealm userRealm) {
+
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realmm) {
+                if (userRealm.isFollow()) {
+                    userRealm.setFollow(false);
+                } else {
+                    userRealm.setFollow(true);
+                }
+                realmm.copyToRealmOrUpdate(userRealm);
+            }
+        });
+    }
+
     public RealmResults<UserRealm> getUsers() {
         return realm.where(UserRealm.class).findAll();
     }
