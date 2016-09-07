@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.sebangsa.pemanasan2.model.UserRealm;
 import com.sebangsa.pemanasan2.service.RealmService;
+import com.sebangsa.pemanasan2.service.RetrofitService;
 
 import io.realm.RealmResults;
 
@@ -24,9 +25,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         RealmResults<UserRealm> users = realmService.getUsers();
-        if (users.size() > 0)
+        if (users.size() > 0) {
             Log.i(LOG_TAG, "Users exist");
-        else
+        } else {
             Log.i(LOG_TAG, "Users not exist");
+            retrieveFollowing();
+        }
+    }
+
+    private void retrieveFollowing() {
+        RetrofitService rs = RetrofitService.getRetrofitServiceInstance();
+        rs.retrieveFollowingUsers();
     }
 }
