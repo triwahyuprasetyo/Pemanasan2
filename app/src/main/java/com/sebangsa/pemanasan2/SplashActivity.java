@@ -5,15 +5,20 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.sebangsa.pemanasan2.model.MessageEvent;
 import com.sebangsa.pemanasan2.model.UserRealm;
 import com.sebangsa.pemanasan2.service.RealmService;
 import com.sebangsa.pemanasan2.service.RetrofitService;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import io.realm.RealmResults;
 
 public class SplashActivity extends AppCompatActivity {
     private static final String LOG_TAG = "MAIN ACTIVITY";
     private RealmService realmService;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,18 +26,28 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         realmService = RealmService.getRealmService(this);
 
-        //EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
 
-        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog = new ProgressDialog(this);
         dialog.setMessage("message");
         dialog.setCancelable(false);
         dialog.setInverseBackgroundForced(false);
         dialog.show();
 
-        //dialog.hide();
+
     }
 
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 
+    @Subscribe
+    public void onMessageEvent(MessageEvent e) {
+        Log.i(LOG_TAG,"dismiss");
+        dialog.dismiss();
+    }
 
     @Override
     protected void onResume() {

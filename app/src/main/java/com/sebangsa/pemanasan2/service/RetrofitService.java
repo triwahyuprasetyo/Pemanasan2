@@ -2,9 +2,12 @@ package com.sebangsa.pemanasan2.service;
 
 import android.util.Log;
 
+import com.sebangsa.pemanasan2.model.MessageEvent;
 import com.sebangsa.pemanasan2.model.User;
 import com.sebangsa.pemanasan2.model.UserRealm;
 import com.sebangsa.pemanasan2.model.UserWrapper;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,11 +61,14 @@ public class RetrofitService {
                     userList.add(user);
                     Log.i("FOLLOWING", u.getId() + ", " + u.getUsername() + ", " + u.getBio() + ", " + u.getName() + ", " + u.getAction().isFollow() + ", " + u.getAvatar().getMedium() + ", " + u.getStatistic().getFollowing() + ", " + u.getStatistic().getFollowers());
                 }
+                Log.i("FOLLOWING", "Selesai");
+                EventBus.getDefault().post(new MessageEvent("Hello everyone!"));
             }
 
             @Override
             public void onFailure(Call<UserWrapper> call, Throwable t) {
-
+                Log.i("FOLLOWING", "Error");
+                EventBus.getDefault().post(new MessageEvent("Hello everyone!"));
             }
         });
     }
