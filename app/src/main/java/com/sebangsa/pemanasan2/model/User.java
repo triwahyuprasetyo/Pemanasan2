@@ -3,11 +3,14 @@ package com.sebangsa.pemanasan2.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by sebangsa on 8/30/16.
  */
 public class User {
 
+    @PrimaryKey
     @Expose
     @SerializedName("id")
     private int id;
