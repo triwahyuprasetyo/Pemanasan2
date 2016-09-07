@@ -2,7 +2,7 @@ package com.sebangsa.pemanasan2.service;
 
 import android.content.Context;
 
-import com.sebangsa.pemanasan2.model.User;
+import com.sebangsa.pemanasan2.model.UserRealm;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -32,17 +32,17 @@ public class RealmService {
         return realmService;
     }
 
-    public void saveUser(final User user) {
+    public void saveUser(final UserRealm userRealm) {
 
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realmm) {
-                realmm.copyToRealmOrUpdate(user);
+                realmm.copyToRealmOrUpdate(userRealm);
             }
         });
     }
 
-    public RealmResults<User> getUsers() {
-        return realm.where(User.class).findAll();
+    public RealmResults<UserRealm> getUsers() {
+        return realm.where(UserRealm.class).findAll();
     }
 }

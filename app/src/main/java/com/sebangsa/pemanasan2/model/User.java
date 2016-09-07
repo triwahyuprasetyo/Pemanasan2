@@ -9,7 +9,7 @@ import io.realm.annotations.PrimaryKey;
 /**
  * Created by sebangsa on 8/30/16.
  */
-public class User  extends RealmObject {
+public class User{
 
     @PrimaryKey
     @Expose
