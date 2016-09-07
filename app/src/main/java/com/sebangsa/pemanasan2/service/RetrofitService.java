@@ -61,14 +61,14 @@ public class RetrofitService {
                     userList.add(user);
                     Log.i("FOLLOWING", u.getId() + ", " + u.getUsername() + ", " + u.getBio() + ", " + u.getName() + ", " + u.getAction().isFollow() + ", " + u.getAvatar().getMedium() + ", " + u.getStatistic().getFollowing() + ", " + u.getStatistic().getFollowers());
                 }
-                Log.i("FOLLOWING", "Selesai");
-                EventBus.getDefault().post(new MessageEvent("Hello everyone!"));
+                Log.i("FOLLOWING", "Success" + userList.size());
+                EventBus.getDefault().post(userList);
             }
 
             @Override
             public void onFailure(Call<UserWrapper> call, Throwable t) {
                 Log.i("FOLLOWING", "Error");
-                EventBus.getDefault().post(new MessageEvent("Hello everyone!"));
+                EventBus.getDefault().post(new MessageEvent("Failure"));
             }
         });
     }

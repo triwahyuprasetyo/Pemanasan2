@@ -27,10 +27,9 @@ public class SebangsaRecyclerViewAdapter extends RecyclerView.Adapter<SebangsaRe
     private List<UserRealm> listUser;
     private LayoutInflater inflater;
     private Context context;
-    private String type;
 
     public SebangsaRecyclerViewAdapter(List list, Context c) {
-        inflater = LayoutInflater.from(context);
+        inflater = LayoutInflater.from(c);
         listUser = (List<UserRealm>) list;
         this.context = c;
     }

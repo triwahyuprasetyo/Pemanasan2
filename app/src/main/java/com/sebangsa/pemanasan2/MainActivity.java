@@ -1,6 +1,6 @@
 package com.sebangsa.pemanasan2;
 
-import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,26 +15,16 @@ import org.greenrobot.eventbus.Subscribe;
 
 import io.realm.RealmResults;
 
-public class SplashActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = "MAIN ACTIVITY";
     private RealmService realmService;
-    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         realmService = RealmService.getRealmService(this);
-
         EventBus.getDefault().register(this);
-
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("message");
-        dialog.setCancelable(false);
-        dialog.setInverseBackgroundForced(false);
-        dialog.show();
-
-
     }
 
     @Override
@@ -44,9 +34,11 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     @Subscribe
-    public void onMessageEvent(MessageEvent e) {
-        Log.i(LOG_TAG,"dismiss");
-        dialog.dismiss();
+    public void onMessageEvent(MessageEvent me) {
+        if (me.getMessage().equals("Success")) {
+            Intent intent = new Intent(MainActivity.this, FollowingActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
