@@ -17,10 +17,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.sebangsa.pemanasan1.adapter.SebangsaRecyclerViewAdapter;
-import com.sebangsa.pemanasan1.model.User;
-import com.sebangsa.pemanasan1.retrofit.RetrofitService;
-import com.sebangsa.pemanasan1.ui.SimpleDividerItemDecoration;
+import com.sebangsa.pemanasan2.model.UserRealm;
+import com.sebangsa.pemanasan2.ui.SebangsaRecyclerViewAdapter;
+import com.sebangsa.pemanasan2.ui.SimpleDividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +29,7 @@ public class FollowingActivity extends AppCompatActivity implements View.OnKeyLi
     private RecyclerView recView;
     private SebangsaRecyclerViewAdapter adapter;
     private EditText editTextSearch;
-    private List<User> userList;
+    private List<UserRealm> userList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +41,7 @@ public class FollowingActivity extends AppCompatActivity implements View.OnKeyLi
         recView = (RecyclerView) findViewById(R.id.rec_list);
         recView.setLayoutManager(new LinearLayoutManager(this));
         recView.addItemDecoration(new SimpleDividerItemDecoration(this));
-        userList = new ArrayList<User>();
-        RetrofitService rs = RetrofitService.getRetrofitServiceInstance();
-        rs.retrieveUser(this);
+        userList = new ArrayList<UserRealm>();
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -90,14 +87,14 @@ public class FollowingActivity extends AppCompatActivity implements View.OnKeyLi
         return false;
     }
 
-    private void setAdapter(List<User> userList) {
-        adapter = new SebangsaRecyclerViewAdapter(userList, this, "User");
+    private void setAdapter(List<UserRealm> userList) {
+        adapter = new SebangsaRecyclerViewAdapter(userList, this);
         recView.setAdapter(adapter);
     }
 
     private void searchUser(String query) {
-        List<User> userListTemp = new ArrayList<User>();
-        for (User u : userList) {
+        List<UserRealm> userListTemp = new ArrayList<UserRealm>();
+        for (UserRealm u : userList) {
             if (u.getUsername().toLowerCase().contains(query)) {
                 userListTemp.add(u);
             }
@@ -105,7 +102,7 @@ public class FollowingActivity extends AppCompatActivity implements View.OnKeyLi
         setAdapter(userListTemp);
     }
 
-    public void setUserListData(List<User> userList) {
+    public void setUserListData(List<UserRealm> userList) {
         this.userList = userList;
         setAdapter(userList);
     }
