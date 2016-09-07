@@ -7,6 +7,11 @@ import com.google.gson.annotations.SerializedName;
  * Created by sebangsa on 8/30/16.
  */
 public class User {
+
+    @Expose
+    @SerializedName("id")
+    private int id;
+
     @Expose
     @SerializedName("username")
     private String username;
@@ -30,6 +35,14 @@ public class User {
     @Expose
     @SerializedName("statistic")
     private Statistic statistic;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
