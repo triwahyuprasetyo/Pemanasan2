@@ -3,6 +3,7 @@
     package="com.sebangsa.pemanasan2">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,6 +14,11 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".FollowingActivity" />
+        </activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
