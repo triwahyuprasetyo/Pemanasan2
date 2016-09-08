@@ -58,7 +58,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         EventBus.getDefault().register(this);
 
-
+        setTitle("");
     }
 
     @Override
@@ -84,7 +84,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             textViewFollowers.setText(u.getFollowers()+"");
             Log.i("UserRealm", u.getUsername() + " : " + u.getName());
 
-            //EventBus.getDefault().removeStickyEvent(UserRealm.class);
+            EventBus.getDefault().removeStickyEvent(UserRealm.class);
         }
     }
 
