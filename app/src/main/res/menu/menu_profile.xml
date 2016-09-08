@@ -3,8 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.sebangsa.pemanasan2.ProfileActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:id="@+id/action_full_bio"
+        android:orderInCategory="1"
+        android:title="@string/action_fullbio"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_mute"
+        android:orderInCategory="2"
+        android:title="@string/action_mute"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_report_block"
+        android:orderInCategory="3"
+        android:title="@string/action_report_block"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_copy_url_account"
+        android:orderInCategory="4"
+        android:title="@string/action_copy_url_account"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:orderInCategory="5"
+        android:title="Search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
 </menu>

@@ -5,6 +5,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 
 import com.sebangsa.pemanasan2.model.UserRealm;
@@ -20,13 +22,11 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
             }
         });
         EventBus.getDefault().register(this);
@@ -41,8 +41,20 @@ public class ProfileActivity extends AppCompatActivity {
     @Subscribe(sticky = true)
     public void onUserRealmEvent(UserRealm user) {
         if (user != null) {
+            updateView(user);
             Log.i("UserRealm", user.getUsername() + " : " + user.getName());
             EventBus.getDefault().removeStickyEvent(UserRealm.class);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_profile, menu);
+        return true;
+    }
+
+    private void updateView(UserRealm user) {
+
     }
 }

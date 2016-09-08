@@ -76,8 +76,8 @@ public class SebangsaRecyclerViewAdapter extends RecyclerView.Adapter<SebangsaRe
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Posisi : " + position, Toast.LENGTH_SHORT).show();
-                Log.i("FOLLOWING", user.getId() + ", " + user.getUsername() + ", " + user.getBio() + ", " + user.getName() + ", " + user.isFollow() + ", " + user.getMedium() + ", " + user.getFollowing() + ", " + user.getFollowers());
+//                Toast.makeText(context, "Posisi : " + position, Toast.LENGTH_SHORT).show();
+//                Log.i("FOLLOWING", user.getId() + ", " + user.getUsername() + ", " + user.getBio() + ", " + user.getName() + ", " + user.isFollow() + ", " + user.getMedium() + ", " + user.getFollowing() + ", " + user.getFollowers());
                 EventBus.getDefault().postSticky(user);
                 Intent i = new Intent(context, ProfileActivity.class);
                 context.startActivity(i);
