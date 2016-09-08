@@ -100,11 +100,11 @@ public class FollowingActivity extends AppCompatActivity implements View.OnKeyLi
         saveFollowingUsers(users);
     }
 
-    @Subscribe
-    public void onUserRealmEvent(UserRealm user) {
-        Log.i(LOG_TAG, "Yuhuuu");
-        realmService.updateUser(user);
-    }
+//    @Subscribe
+//    public void onUserRealmEvent(UserRealm user) {
+//        Log.i(LOG_TAG, "Yuhuuu");
+//        realmService.updateUser(user);
+//    }
 
     private void saveFollowingUsers(List<UserRealm> users) {
         for (UserRealm user : users) {

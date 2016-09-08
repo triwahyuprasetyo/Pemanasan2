@@ -67,8 +67,8 @@ public class SebangsaRecyclerViewAdapter extends RecyclerView.Adapter<SebangsaRe
         holder.buttonFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBus.getDefault().post(user);
-                setImageButtonUser(user, holder);
+//                EventBus.getDefault().post(user);
+//                setImageButtonUser(user, holder);
 
             }
         });
