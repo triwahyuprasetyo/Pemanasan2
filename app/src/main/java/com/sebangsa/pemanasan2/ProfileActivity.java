@@ -1,10 +1,12 @@
 package com.sebangsa.pemanasan2;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
@@ -120,27 +122,31 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private void setImageButtonUser(UserRealm user) {
         if (user.isFollow()) {
-            //buttonFollowing.setCompoundDrawablesWithIntrinsicBounds(R.drawable.i_followed, 0, 0, 0);
-            Drawable drawable = getResources().getDrawable(R.drawable.i_followed);
-            drawable.setBounds(0, 0, (int)(drawable.getIntrinsicWidth()*0.8),
-                    (int)(drawable.getIntrinsicHeight()*0.8));
+            Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.i_followed);
+            drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * 0.7),
+                    (int) (drawable.getIntrinsicHeight() * 0.7));
             ScaleDrawable sd = new ScaleDrawable(drawable, 0, 20, 20);
             buttonFollowing.setCompoundDrawables(sd.getDrawable(), null, null, null);
             buttonFollowing.setBackgroundResource(R.drawable.profile_rounded_corners_imagebutton_green);
+            buttonFollowing.setTextColor(Color.WHITE);
+            buttonFollowing.setTextSize(15);
         } else {
-            Drawable drawable = getResources().getDrawable(R.drawable.i_follow);
-            drawable.setBounds(0, 0, (int)(drawable.getIntrinsicWidth()*0.8),
-                    (int)(drawable.getIntrinsicHeight()*0.8));
+            Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.i_follow);
+            drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * 0.7),
+                    (int) (drawable.getIntrinsicHeight() * 0.7));
             ScaleDrawable sd = new ScaleDrawable(drawable, 0, 20, 20);
             buttonFollowing.setCompoundDrawables(sd.getDrawable(), null, null, null);
-            buttonFollowing.setBackgroundResource(R.drawable.rounded_corners_imagebutton_white);
+            buttonFollowing.setBackgroundResource(R.drawable.profile_rounded_corners_imagebutton_white);
+            buttonFollowing.setTextSize(15);
+            buttonFollowing.setText("Follow");
         }
-//        Drawable drawable = getResources().getDrawable(R.drawable.i_join);
-//        drawable.setBounds(0, 0, (int)(drawable.getIntrinsicWidth()*0.8),
-//                (int)(drawable.getIntrinsicHeight()*0.8));
-//        ScaleDrawable sd = new ScaleDrawable(drawable, 0, 20, 20);
-//        buttonFollowing.setCompoundDrawables(sd.getDrawable(), null, null, null);
-//        buttonMention.setBackgroundResource(R.drawable.rounded_corners_imagebutton_white);
+        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.i_join);
+        drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * 0.7),
+                (int) (drawable.getIntrinsicHeight() * 0.7));
+        ScaleDrawable sd = new ScaleDrawable(drawable, 0, 20, 20);
+        buttonMention.setCompoundDrawables(sd.getDrawable(), null, null, null);
+        buttonFollowing.setTextSize(15);
+        buttonMention.setBackgroundResource(R.drawable.profile_rounded_corners_imagebutton_white);
     }
 
     @Override
