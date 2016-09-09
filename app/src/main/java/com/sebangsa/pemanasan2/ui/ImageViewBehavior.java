@@ -34,7 +34,6 @@ public class ImageViewBehavior extends CoordinatorLayout.Behavior<ImageView> {
         Log.i("SCALE X", child.getScaleX() + "");
         Log.i("SCALE Y", child.getScaleY() + "");
 
-
         if (-200 < childY && childY < -150) {
             if (childY < temp) {
                 Log.i("Kurang", "Kurang");
@@ -51,8 +50,13 @@ public class ImageViewBehavior extends CoordinatorLayout.Behavior<ImageView> {
             child.setScaleX((float) 1.0);
             child.setScaleY((float) 1.0);
         } else {
-            child.setScaleX(scale);
-            child.setScaleY(scale);
+            if (scale > (float) 0.3) {
+                child.setScaleX(scale);
+                child.setScaleY(scale);
+            } else {
+                child.setScaleX((float) 0.0);
+                child.setScaleY((float) 0.0);
+            }
         }
         temp = childY;
         setOffsetValue(parent);
