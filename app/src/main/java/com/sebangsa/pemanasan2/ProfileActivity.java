@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -38,7 +37,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private TextView textViewFollowers;
     private Button buttonMention;
     private Button buttonFollowing;
-    private FloatingActionButton fab;
+    private ImageView imageViewProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +47,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
+
         textViewUsername = (TextView) findViewById(R.id.textView_username);
         textViewName = (TextView) findViewById(R.id.textView_name);
         textViewLocation = (TextView) findViewById(R.id.textView_location);
@@ -62,6 +56,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         textViewCommunity = (TextView) findViewById(R.id.textView_community);
         textViewFollowing = (TextView) findViewById(R.id.textView_following);
         textViewFollowers = (TextView) findViewById(R.id.textView_followers);
+        imageViewProfile = (ImageView) findViewById(R.id.imageView_profie);
         buttonFollowing = (Button) findViewById(R.id.button_following);
         buttonFollowing.setOnClickListener(this);
         buttonMention = (Button) findViewById(R.id.button_mention);
@@ -94,14 +89,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             textViewFollowing.setText(u.getFollowing() + "");
             textViewFollowers.setText(u.getFollowers() + "");
 
-            Glide.with(this).load(u.getMedium().trim()).asBitmap().centerCrop().into(new BitmapImageViewTarget(fab) {
+            Glide.with(this).load(u.getMedium().trim()).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageViewProfile) {
                 @Override
                 protected void setResource(Bitmap resource) {
                     RoundedBitmapDrawable circularBitmapDrawable =
-                            RoundedBitmapDrawableFactory.create(fab.getResources(), resource);
+                            RoundedBitmapDrawableFactory.create(imageViewProfile.getResources(), resource);
                     circularBitmapDrawable.setCircular(true);
-                    fab.setImageDrawable(circularBitmapDrawable);
-                    fab.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    imageViewProfile.setImageDrawable(circularBitmapDrawable);
                 }
             });
 
