@@ -56,7 +56,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         textViewCommunity = (TextView) findViewById(R.id.textView_community);
         textViewFollowing = (TextView) findViewById(R.id.textView_following);
         textViewFollowers = (TextView) findViewById(R.id.textView_followers);
-        imageViewProfile = (ImageView) findViewById(R.id.imageView_profie);
+        imageViewProfile = (ImageView) findViewById(R.id.imageView_profile);
         buttonFollowing = (Button) findViewById(R.id.button_following);
         buttonFollowing.setOnClickListener(this);
         buttonMention = (Button) findViewById(R.id.button_mention);
