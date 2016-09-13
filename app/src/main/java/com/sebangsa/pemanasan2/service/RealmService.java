@@ -33,7 +33,7 @@ public class RealmService {
     }
 
 
-    public void saveUser2(final User userRealm) {
+    public void saveUser(final User userRealm) {
 
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -43,7 +43,7 @@ public class RealmService {
         });
     }
 
-    public RealmResults<User> getUsers2() {
+    public RealmResults<User> getUsers() {
         return realm.where(User.class).findAll();
     }
 }

@@ -21,13 +21,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.sebangsa.pemanasan2.model.User;
-import com.sebangsa.pemanasan2.service.RealmService;
-import com.sebangsa.pemanasan2.service.RetrofitService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import io.realm.RealmResults;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -43,7 +39,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private Button buttonMention;
     private Button buttonFollowing;
     private ImageView imageViewProfile;
-    private RealmService realmService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,21 +146,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        realmService = FollowingActivity.realmService;
-        if (view.getId() == buttonMention.getId()) {
-            RetrofitService.getRetrofitServiceInstance().retrieveFollowingUsers2();
-        } else if (view.getId() == buttonFollowing.getId()) {
-            RealmResults<User> users = realmService.getUsers2();
-            if (users.size() > 0) {
-                Log.i("KKKUUUUU", "Users exist on DB");
-                for (User user : users) {
-                    Log.i("USER ID 22", user.getId() + "");
-                }
-            } else {
-                Log.i("EEEWWWWW", "Users not exist on DB");
 
-            }
-        }
     }
 
 }

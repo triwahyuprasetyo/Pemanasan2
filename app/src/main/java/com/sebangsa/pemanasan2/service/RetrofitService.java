@@ -2,7 +2,6 @@ package com.sebangsa.pemanasan2.service;
 
 import android.util.Log;
 
-import com.sebangsa.pemanasan2.FollowingActivity;
 import com.sebangsa.pemanasan2.model.MessageEvent;
 import com.sebangsa.pemanasan2.model.User;
 import com.sebangsa.pemanasan2.model.UserWrapper;
@@ -24,7 +23,6 @@ public class RetrofitService {
     private static final String BASE_URL = "http://hangga.web.id/";
     private static RetrofitService retrofitService;
     private SebangsaService service;
-    private RealmService realmService;
 
     public RetrofitService() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -47,19 +45,13 @@ public class RetrofitService {
             @Override
             public void onResponse(Call<UserWrapper> call, Response<UserWrapper> response) {
                 List<User> userList = response.body().getUsers();
-
-                realmService = FollowingActivity.realmService;
-                for (User user2 : userList) {
-                    Log.i("USER ID", user2.getId() + "");
-                    realmService.saveUser2(user2);
-                }
-                Log.i("FOLLOWING", "Success" + userList.size());
+                Log.i("FOLLOWING", "Retrieve Following Users Success" + userList.size());
                 EventBus.getDefault().post(userList);
             }
 
             @Override
             public void onFailure(Call<UserWrapper> call, Throwable t) {
-                Log.i("FOLLOWING", "Error");
+                Log.i("FOLLOWING", "Retrieve Following Users Error");
                 EventBus.getDefault().post(new MessageEvent("Failure"));
             }
         });

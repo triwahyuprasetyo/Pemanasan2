@@ -33,12 +33,12 @@ import java.util.List;
 import io.realm.RealmResults;
 
 public class FollowingActivity extends AppCompatActivity implements View.OnKeyListener {
+    public static RealmService realmService;
     private final String LOG_TAG = "FOLLOWING ACTIVITY";
     private RecyclerView recView;
     private SebangsaRecyclerViewAdapter adapter;
     private EditText editTextSearch;
     private List<User> userList;
-    public static RealmService realmService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +73,7 @@ public class FollowingActivity extends AppCompatActivity implements View.OnKeyLi
             Log.i(LOG_TAG, "Users exist on List");
             setAdapter(userList);
         } else {
-            RealmResults<User> users = realmService.getUsers2();
+            RealmResults<User> users = realmService.getUsers();
             if (users.size() > 0) {
                 Log.i(LOG_TAG, "Users exist on DB");
                 userList = new ArrayList<User>();
@@ -102,7 +102,7 @@ public class FollowingActivity extends AppCompatActivity implements View.OnKeyLi
 
     private void saveFollowingUsers(List<User> users) {
         for (User user : users) {
-            realmService.saveUser2(user);
+            realmService.saveUser(user);
         }
     }
 
