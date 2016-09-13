@@ -98,7 +98,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     imageViewProfile.setImageDrawable(circularBitmapDrawable);
                 }
             });
-
+            imageViewProfile.setBackgroundResource(R.drawable.all_circle_white_bg);
 
 //            Glide.with(this)
 //                    .load(u.getMedium().trim())

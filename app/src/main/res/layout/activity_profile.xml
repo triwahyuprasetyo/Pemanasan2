@@ -37,10 +37,12 @@
 
     <ImageView
         android:id="@+id/imageView_profile"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_centerInParent="true"
         android:orientation="horizontal"
+        android:padding="2dp"
+        android:background="@drawable/all_circle_white_bg"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|center"
         app:layout_behavior="com.sebangsa.pemanasan2.ui.ImageViewBehavior" />
