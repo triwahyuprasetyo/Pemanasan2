@@ -6,20 +6,18 @@ import android.graphics.Bitmap;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.sebangsa.pemanasan2.ProfileActivity;
 import com.sebangsa.pemanasan2.R;
-import com.sebangsa.pemanasan2.model.UserRealm;
+import com.sebangsa.pemanasan2.model.User;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -30,14 +28,14 @@ import java.util.List;
  */
 public class SebangsaRecyclerViewAdapter extends RecyclerView.Adapter<SebangsaRecyclerViewAdapter.SebangsaRecyclerViewHolder> {
 
-    private List<UserRealm> listUser;
+    private List<User> listUser;
     private LayoutInflater inflater;
     private Context context;
     private ItemClickCallBack itemClickCallBack;
 
     public SebangsaRecyclerViewAdapter(List list, Context c) {
         inflater = LayoutInflater.from(c);
-        listUser = (List<UserRealm>) list;
+        listUser = (List<User>) list;
         this.context = c;
     }
 
@@ -49,12 +47,12 @@ public class SebangsaRecyclerViewAdapter extends RecyclerView.Adapter<SebangsaRe
 
     @Override
     public void onBindViewHolder(final SebangsaRecyclerViewHolder holder, final int position) {
-        final UserRealm user = listUser.get(position);
+        final User user = listUser.get(position);
         holder.username.setText("@" + user.getUsername());
         holder.name.setText(user.getName());
         holder.members.setVisibility(View.INVISIBLE);
 
-        Glide.with(context).load(user.getMedium().trim()).asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.imageAvatar) {
+        Glide.with(context).load(user.getAvatar().getMedium().trim()).asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.imageAvatar) {
             @Override
             protected void setResource(Bitmap resource) {
                 RoundedBitmapDrawable circularBitmapDrawable =
@@ -88,8 +86,8 @@ public class SebangsaRecyclerViewAdapter extends RecyclerView.Adapter<SebangsaRe
 
     }
 
-    private void setImageButtonUser(UserRealm user, SebangsaRecyclerViewHolder holder) {
-        if (user.isFollow()) {
+    private void setImageButtonUser(User user, SebangsaRecyclerViewHolder holder) {
+        if (user.getAction().isFollow()) {
             holder.buttonFollow.setImageResource(R.drawable.i_followed);
             holder.buttonFollow.setBackgroundResource(R.drawable.rounded_corners_imagebutton_green);
         } else {

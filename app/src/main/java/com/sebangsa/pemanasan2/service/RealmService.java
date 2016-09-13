@@ -2,7 +2,7 @@ package com.sebangsa.pemanasan2.service;
 
 import android.content.Context;
 
-import com.sebangsa.pemanasan2.model.UserRealm;
+import com.sebangsa.pemanasan2.model.User;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -32,7 +32,8 @@ public class RealmService {
         return realmService;
     }
 
-    public void saveUser(final UserRealm userRealm) {
+
+    public void saveUser2(final User userRealm) {
 
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -42,22 +43,7 @@ public class RealmService {
         });
     }
 
-    public void updateUser(final UserRealm userRealm) {
-
-        realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realmm) {
-                if (userRealm.isFollow()) {
-                    userRealm.setFollow(false);
-                } else {
-                    userRealm.setFollow(true);
-                }
-                realmm.copyToRealmOrUpdate(userRealm);
-            }
-        });
-    }
-
-    public RealmResults<UserRealm> getUsers() {
-        return realm.where(UserRealm.class).findAll();
+    public RealmResults<User> getUsers2() {
+        return realm.where(User.class).findAll();
     }
 }

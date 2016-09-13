@@ -2,6 +2,9 @@ package com.sebangsa.pemanasan2.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.sebangsa.pemanasan2.model.sub.Action;
+import com.sebangsa.pemanasan2.model.sub.Avatar;
+import com.sebangsa.pemanasan2.model.sub.Statistic;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -9,7 +12,7 @@ import io.realm.annotations.PrimaryKey;
 /**
  * Created by sebangsa on 8/30/16.
  */
-public class User{
+public class User extends RealmObject {
 
     @PrimaryKey
     @Expose
@@ -96,59 +99,4 @@ public class User{
         this.statistic = statistic;
     }
 
-    public static class Action {
-
-        @Expose
-        @SerializedName("is_follow")
-        private boolean follow;
-
-        public boolean isFollow() {
-            return follow;
-        }
-
-        public void setFollow(boolean follow) {
-            this.follow = follow;
-        }
-    }
-
-    public static class Avatar {
-        @Expose
-        @SerializedName("medium")
-        private String medium;
-
-        public String getMedium() {
-            return medium;
-        }
-
-        public void setMedium(String medium) {
-            this.medium = medium;
-        }
-    }
-
-    public static class Statistic {
-
-        @Expose
-        @SerializedName("following")
-        private int following;
-
-        @Expose
-        @SerializedName("followers")
-        private int followers;
-
-        public int getFollowing() {
-            return following;
-        }
-
-        public void setFollowing(int following) {
-            this.following = following;
-        }
-
-        public int getFollowers() {
-            return followers;
-        }
-
-        public void setFollowers(int followers) {
-            this.followers = followers;
-        }
-    }
 }

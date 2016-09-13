@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.sebangsa.pemanasan2.model.MessageEvent;
-import com.sebangsa.pemanasan2.model.UserRealm;
+import com.sebangsa.pemanasan2.model.User;
 import com.sebangsa.pemanasan2.service.RealmService;
 import com.sebangsa.pemanasan2.service.RetrofitService;
 import com.sebangsa.pemanasan2.ui.SebangsaRecyclerViewAdapter;
@@ -37,8 +37,8 @@ public class FollowingActivity extends AppCompatActivity implements View.OnKeyLi
     private RecyclerView recView;
     private SebangsaRecyclerViewAdapter adapter;
     private EditText editTextSearch;
-    private List<UserRealm> userList;
-    private RealmService realmService;
+    private List<User> userList;
+    public static RealmService realmService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class FollowingActivity extends AppCompatActivity implements View.OnKeyLi
         recView.setLayoutManager(new LinearLayoutManager(this));
         recView.addItemDecoration(new SimpleDividerItemDecoration(this));
 
-        userList = new ArrayList<UserRealm>();
+        userList = new ArrayList<User>();
 
         realmService = RealmService.getRealmService(this);
         EventBus.getDefault().register(this);
@@ -73,11 +73,11 @@ public class FollowingActivity extends AppCompatActivity implements View.OnKeyLi
             Log.i(LOG_TAG, "Users exist on List");
             setAdapter(userList);
         } else {
-            RealmResults<UserRealm> users = realmService.getUsers();
+            RealmResults<User> users = realmService.getUsers2();
             if (users.size() > 0) {
                 Log.i(LOG_TAG, "Users exist on DB");
-                userList = new ArrayList<UserRealm>();
-                for (UserRealm user : users) {
+                userList = new ArrayList<User>();
+                for (User user : users) {
                     userList.add(user);
                 }
                 setAdapter(userList);
@@ -90,25 +90,19 @@ public class FollowingActivity extends AppCompatActivity implements View.OnKeyLi
 
     private void retrieveFollowing() {
         RetrofitService rs = RetrofitService.getRetrofitServiceInstance();
-        rs.retrieveFollowingUsers();
+        rs.retrieveFollowingUsers2();
     }
 
     @Subscribe
-    public void onListUserRealmEvent(List<UserRealm> users) {
+    public void onListUserRealmEvent(List<User> users) {
         userList = users;
         setAdapter(users);
         saveFollowingUsers(users);
     }
 
-//    @Subscribe
-//    public void onUserRealmEvent(UserRealm user) {
-//        Log.i(LOG_TAG, "Yuhuuu");
-//        realmService.updateUser(user);
-//    }
-
-    private void saveFollowingUsers(List<UserRealm> users) {
-        for (UserRealm user : users) {
-            realmService.saveUser(user);
+    private void saveFollowingUsers(List<User> users) {
+        for (User user : users) {
+            realmService.saveUser2(user);
         }
     }
 
@@ -160,14 +154,14 @@ public class FollowingActivity extends AppCompatActivity implements View.OnKeyLi
         return false;
     }
 
-    private void setAdapter(List<UserRealm> userList) {
+    private void setAdapter(List<User> userList) {
         adapter = new SebangsaRecyclerViewAdapter(userList, this);
         recView.setAdapter(adapter);
     }
 
     private void searchUser(String query) {
-        List<UserRealm> userListTemp = new ArrayList<UserRealm>();
-        for (UserRealm u : userList) {
+        List<User> userListTemp = new ArrayList<User>();
+        for (User u : userList) {
             if (u.getUsername().toLowerCase().contains(query)) {
                 userListTemp.add(u);
             }

@@ -10,5 +10,5 @@ import retrofit2.http.GET;
  */
 public interface SebangsaService {
     @GET("sdp-latihan/following.php")
-    Call<UserWrapper> getFollowingUsers();
+    Call<UserWrapper> getFollowingUsers2();
 }

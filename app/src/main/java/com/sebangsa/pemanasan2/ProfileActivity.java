@@ -20,13 +20,18 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
-import com.sebangsa.pemanasan2.model.UserRealm;
+import com.sebangsa.pemanasan2.model.User;
+import com.sebangsa.pemanasan2.service.RealmService;
+import com.sebangsa.pemanasan2.service.RetrofitService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import io.realm.RealmResults;
+
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static ProfileActivity ps;
     private TextView textViewUsername;
     private TextView textViewName;
     private TextView textViewLocation;
@@ -38,6 +43,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private Button buttonMention;
     private Button buttonFollowing;
     private ImageView imageViewProfile;
+    private RealmService realmService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,22 +80,22 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Subscribe(sticky = true)
-    public void onUserRealmEvent(UserRealm u) {
+    public void onUserRealmEvent(User u) {
         if (u != null) {
             Log.i("UserRealm", u.getUsername() + " : " + u.getName());
             Log.i("FOLLOWING", u.getId() + ", " + u.getUsername() + ", " + u.getBio() + ", "
-                    + u.getName() + ", " + u.isFollow() + ", " + u.getMedium() + ", " + u.getFollowing() + ", "
-                    + u.getFollowers());
+                    + u.getName() + ", " + u.getAction().isFollow() + ", " + u.getAvatar().getMedium() + ", " + u.getStatistic().getFollowing() + ", "
+                    + u.getStatistic().getFollowers());
             textViewUsername.setText("@" + u.getUsername());
             textViewName.setText(u.getName());
             textViewLocation.setText("Loc -");
             textViewBio.setText(u.getBio());
             textViewPublicPost.setText("0");
             textViewCommunity.setText("0");
-            textViewFollowing.setText(u.getFollowing() + "");
-            textViewFollowers.setText(u.getFollowers() + "");
+            textViewFollowing.setText(u.getStatistic().getFollowing() + "");
+            textViewFollowers.setText(u.getStatistic().getFollowers() + "");
 
-            Glide.with(this).load(u.getMedium().trim()).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageViewProfile) {
+            Glide.with(this).load(u.getAvatar().getMedium().trim()).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageViewProfile) {
                 @Override
                 protected void setResource(Bitmap resource) {
                     RoundedBitmapDrawable circularBitmapDrawable =
@@ -100,22 +106,15 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             });
             imageViewProfile.setBackgroundResource(R.drawable.all_circle_white_bg);
 
-//            Glide.with(this)
-//                    .load(u.getMedium().trim())
-//                    .centerCrop()
-//                    .placeholder(R.mipmap.ic_launcher)
-//                    .crossFade()
-//                    .into(fab);
-
             Log.i("UserRealm", u.getUsername() + " : " + u.getName());
 
             setImageButtonUser(u);
-            EventBus.getDefault().removeStickyEvent(UserRealm.class);
+            EventBus.getDefault().removeStickyEvent(User.class);
         }
     }
 
-    private void setImageButtonUser(UserRealm user) {
-        if (user.isFollow()) {
+    private void setImageButtonUser(User user) {
+        if (user.getAction().isFollow()) {
             Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.i_followed);
             drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * 0.7),
                     (int) (drawable.getIntrinsicHeight() * 0.7));
@@ -151,12 +150,22 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
     public void onClick(View view) {
+        realmService = FollowingActivity.realmService;
+        if (view.getId() == buttonMention.getId()) {
+            RetrofitService.getRetrofitServiceInstance().retrieveFollowingUsers2();
+        } else if (view.getId() == buttonFollowing.getId()) {
+            RealmResults<User> users = realmService.getUsers2();
+            if (users.size() > 0) {
+                Log.i("KKKUUUUU", "Users exist on DB");
+                for (User user : users) {
+                    Log.i("USER ID 22", user.getId() + "");
+                }
+            } else {
+                Log.i("EEEWWWWW", "Users not exist on DB");
 
+            }
+        }
     }
+
 }

@@ -2,14 +2,13 @@ package com.sebangsa.pemanasan2.service;
 
 import android.util.Log;
 
+import com.sebangsa.pemanasan2.FollowingActivity;
 import com.sebangsa.pemanasan2.model.MessageEvent;
 import com.sebangsa.pemanasan2.model.User;
-import com.sebangsa.pemanasan2.model.UserRealm;
 import com.sebangsa.pemanasan2.model.UserWrapper;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -25,6 +24,7 @@ public class RetrofitService {
     private static final String BASE_URL = "http://hangga.web.id/";
     private static RetrofitService retrofitService;
     private SebangsaService service;
+    private RealmService realmService;
 
     public RetrofitService() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -41,25 +41,17 @@ public class RetrofitService {
         return retrofitService;
     }
 
-    public void retrieveFollowingUsers() {
-        Call<UserWrapper> call = service.getFollowingUsers();
+    public void retrieveFollowingUsers2() {
+        Call<UserWrapper> call = service.getFollowingUsers2();
         call.enqueue(new Callback<UserWrapper>() {
             @Override
             public void onResponse(Call<UserWrapper> call, Response<UserWrapper> response) {
-                List<UserRealm> userList = new ArrayList<UserRealm>();
-                UserRealm user;
-                for (User u : response.body().getUsers()) {
-                    user = new UserRealm();
-                    user.setId(u.getId());
-                    user.setUsername(u.getUsername());
-                    user.setBio(u.getBio());
-                    user.setName(u.getName());
-                    user.setFollow(u.getAction().isFollow());
-                    user.setMedium(u.getAvatar().getMedium());
-                    user.setFollowing(u.getStatistic().getFollowing());
-                    user.setFollowers(u.getStatistic().getFollowers());
-                    userList.add(user);
-                    Log.i("FOLLOWING", u.getId() + ", " + u.getUsername() + ", " + u.getBio() + ", " + u.getName() + ", " + u.getAction().isFollow() + ", " + u.getAvatar().getMedium() + ", " + u.getStatistic().getFollowing() + ", " + u.getStatistic().getFollowers());
+                List<User> userList = response.body().getUsers();
+
+                realmService = FollowingActivity.realmService;
+                for (User user2 : userList) {
+                    Log.i("USER ID", user2.getId() + "");
+                    realmService.saveUser2(user2);
                 }
                 Log.i("FOLLOWING", "Success" + userList.size());
                 EventBus.getDefault().post(userList);
