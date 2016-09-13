@@ -14,13 +14,10 @@ import android.widget.ImageView;
 
 public class ImageViewBehavior extends CoordinatorLayout.Behavior<ImageView> {
     private float childY;
-    private float temp;
-    private float scale;
 
     public ImageViewBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
         childY = (float) 0.0;
-        scale = (float) 0;
     }
 
     @Override
@@ -30,57 +27,26 @@ public class ImageViewBehavior extends CoordinatorLayout.Behavior<ImageView> {
 
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, ImageView child, View dependency) {
-
         Log.i("SCALE X", child.getScaleX() + "");
         Log.i("SCALE Y", child.getScaleY() + "");
-
-        if (-200 < childY && childY < -150) {
-            if (childY < temp) {
-                Log.i("Kurang", "Kurang");
-                kurangScale();
-            }
-        } else if (-151 < childY && childY < -100) {
-            if (childY > temp) {
-                Log.i("Tambah", "Tambah");
-                tambahScale();
-            }
-        }
-        if (childY == (float) 0.0) {
-            Log.i("True", "True");
-            child.setScaleX((float) 1.0);
-            child.setScaleY((float) 1.0);
-        } else {
-            if (scale > (float) 0.3) {
-                child.setScaleX(scale);
-                child.setScaleY(scale);
-            } else {
-                child.setScaleX((float) 0.0);
-                child.setScaleY((float) 0.0);
-            }
-        }
-        temp = childY;
+        setScaleImage(child);
         setOffsetValue(parent);
         return false;
     }
 
-    private float tambahScale() {
-        if (scale < (float) 1.0) {
-            scale += (float) 0.1;
-        } else {
-            scale = (float) 1.0;
+    private void setScaleImage(ImageView child) {
+        if (-200 <= childY && childY <= -100) {
+            float scale = (Math.abs(childY) - (float) 100) / (float) 100;
+            child.setScaleX((float) 1.0 - scale);
+            child.setScaleY((float) 1.0 - scale);
+        } else if (childY < -200) {
+            child.setScaleX((float) 0.0);
+            child.setScaleY((float) 0.0);
+        } else if (childY > -100) {
+            child.setScaleX((float) 1.0);
+            child.setScaleY((float) 1.0);
         }
-        return scale;
     }
-
-    private float kurangScale() {
-        if (scale > (float) 0.0) {
-            scale -= (float) 0.1;
-        } else {
-            scale = (float) 0.0;
-        }
-        return scale;
-    }
-
 
     private void setOffsetValue(CoordinatorLayout coordinatorLayout) {
         for (int i = 0; i < coordinatorLayout.getChildCount(); i++) {
