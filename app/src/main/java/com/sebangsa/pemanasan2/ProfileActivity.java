@@ -13,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,9 +24,8 @@ import com.sebangsa.pemanasan2.model.User;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
+public class ProfileActivity extends AppCompatActivity {
 
-    public static ProfileActivity ps;
     private TextView textViewUsername;
     private TextView textViewName;
     private TextView textViewLocation;
@@ -57,9 +55,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         textViewFollowers = (TextView) findViewById(R.id.textView_followers);
         imageViewProfile = (ImageView) findViewById(R.id.imageView_profile);
         buttonFollowing = (Button) findViewById(R.id.button_following);
-        buttonFollowing.setOnClickListener(this);
         buttonMention = (Button) findViewById(R.id.button_mention);
-        buttonMention.setOnClickListener(this);
         EventBus.getDefault().register(this);
         setTitle("");
     }
@@ -103,14 +99,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private void setImageButtonUser(User user) {
         if (user.getAction().isFollow()) {
-            setButtonProperties(buttonFollowing, R.drawable.i_followed, Color.WHITE, "Following", 15, R.drawable.profile_rounded_corners_imagebutton_green);
+            setButtonProperties(buttonFollowing, R.drawable.i_followed, Color.WHITE, "Following", R.drawable.profile_rounded_corners_imagebutton_green);
         } else {
-            setButtonProperties(buttonFollowing, R.drawable.i_follow, Color.BLACK, "Follow", 15, R.drawable.profile_rounded_corners_imagebutton_white);
+            setButtonProperties(buttonFollowing, R.drawable.i_follow, Color.BLACK, "Follow", R.drawable.profile_rounded_corners_imagebutton_white);
         }
-        setButtonProperties(buttonMention, R.drawable.i_join, Color.BLACK, "Mention", 15, R.drawable.profile_rounded_corners_imagebutton_white);
+        setButtonProperties(buttonMention, R.drawable.i_join, Color.BLACK, "Mention", R.drawable.profile_rounded_corners_imagebutton_white);
     }
 
-    private void setButtonProperties(Button button, int icon, int textColor, String text, int textSize, int backgroundResource) {
+    private void setButtonProperties(Button button, int icon, int textColor, String text, int backgroundResource) {
         Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), icon);
         drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * 0.7),
                 (int) (drawable.getIntrinsicHeight() * 0.7));
@@ -119,7 +115,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         button.setBackgroundResource(backgroundResource);
         button.setTextColor(textColor);
         button.setText(text);
-        button.setTextSize(textSize);
+        button.setTextSize(15);
     }
 
     @Override
@@ -128,10 +124,4 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         inflater.inflate(R.menu.menu_profile, menu);
         return true;
     }
-
-    @Override
-    public void onClick(View view) {
-
-    }
-
 }
