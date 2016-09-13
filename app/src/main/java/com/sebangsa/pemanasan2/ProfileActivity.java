@@ -47,8 +47,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
         textViewUsername = (TextView) findViewById(R.id.textView_username);
         textViewName = (TextView) findViewById(R.id.textView_name);
         textViewLocation = (TextView) findViewById(R.id.textView_location);
@@ -62,9 +60,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         buttonFollowing.setOnClickListener(this);
         buttonMention = (Button) findViewById(R.id.button_mention);
         buttonMention.setOnClickListener(this);
-
         EventBus.getDefault().register(this);
-
         setTitle("");
     }
 
@@ -89,7 +85,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             textViewCommunity.setText("0");
             textViewFollowing.setText(u.getStatistic().getFollowing() + "");
             textViewFollowers.setText(u.getStatistic().getFollowers() + "");
-
             Glide.with(this).load(u.getAvatar().getMedium().trim()).asBitmap().centerCrop().into(new BitmapImageViewTarget(imageViewProfile) {
                 @Override
                 protected void setResource(Bitmap resource) {
@@ -100,9 +95,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 }
             });
             imageViewProfile.setBackgroundResource(R.drawable.all_circle_white_bg);
-
             Log.i("UserRealm", u.getUsername() + " : " + u.getName());
-
             setImageButtonUser(u);
             EventBus.getDefault().removeStickyEvent(User.class);
         }
@@ -110,31 +103,23 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     private void setImageButtonUser(User user) {
         if (user.getAction().isFollow()) {
-            Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.i_followed);
-            drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * 0.7),
-                    (int) (drawable.getIntrinsicHeight() * 0.7));
-            ScaleDrawable sd = new ScaleDrawable(drawable, 0, 20, 20);
-            buttonFollowing.setCompoundDrawables(sd.getDrawable(), null, null, null);
-            buttonFollowing.setBackgroundResource(R.drawable.profile_rounded_corners_imagebutton_green);
-            buttonFollowing.setTextColor(Color.WHITE);
-            buttonFollowing.setTextSize(15);
+            setButtonProperties(buttonFollowing, R.drawable.i_followed, Color.WHITE, "Following", 15, R.drawable.profile_rounded_corners_imagebutton_green);
         } else {
-            Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.i_follow);
-            drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * 0.7),
-                    (int) (drawable.getIntrinsicHeight() * 0.7));
-            ScaleDrawable sd = new ScaleDrawable(drawable, 0, 20, 20);
-            buttonFollowing.setCompoundDrawables(sd.getDrawable(), null, null, null);
-            buttonFollowing.setBackgroundResource(R.drawable.profile_rounded_corners_imagebutton_white);
-            buttonFollowing.setTextSize(15);
-            buttonFollowing.setText("Follow");
+            setButtonProperties(buttonFollowing, R.drawable.i_follow, Color.BLACK, "Follow", 15, R.drawable.profile_rounded_corners_imagebutton_white);
         }
-        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.i_join);
+        setButtonProperties(buttonMention, R.drawable.i_join, Color.BLACK, "Mention", 15, R.drawable.profile_rounded_corners_imagebutton_white);
+    }
+
+    private void setButtonProperties(Button button, int icon, int textColor, String text, int textSize, int backgroundResource) {
+        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), icon);
         drawable.setBounds(0, 0, (int) (drawable.getIntrinsicWidth() * 0.7),
                 (int) (drawable.getIntrinsicHeight() * 0.7));
-        ScaleDrawable sd = new ScaleDrawable(drawable, 0, 20, 20);
-        buttonMention.setCompoundDrawables(sd.getDrawable(), null, null, null);
-        buttonFollowing.setTextSize(15);
-        buttonMention.setBackgroundResource(R.drawable.profile_rounded_corners_imagebutton_white);
+        ScaleDrawable sd = new ScaleDrawable(drawable, 0, 0, 0);
+        button.setCompoundDrawables(sd.getDrawable(), null, null, null);
+        button.setBackgroundResource(backgroundResource);
+        button.setTextColor(textColor);
+        button.setText(text);
+        button.setTextSize(textSize);
     }
 
     @Override

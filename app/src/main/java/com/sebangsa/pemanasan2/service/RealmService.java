@@ -13,7 +13,7 @@ import io.realm.RealmResults;
  */
 public class RealmService {
     private static RealmService realmService;
-    private final String LOG_TAG = "REALM SERVICE";
+    private static final String LOG_TAG = "REALM SERVICE";
     private Realm realm;
 
     public RealmService() {

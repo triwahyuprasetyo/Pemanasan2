@@ -34,7 +34,7 @@ import io.realm.RealmResults;
 
 public class FollowingActivity extends AppCompatActivity implements View.OnKeyListener {
     public static RealmService realmService;
-    private final String LOG_TAG = "FOLLOWING ACTIVITY";
+    private static final String LOG_TAG = "FOLLOWING ACTIVITY";
     private RecyclerView recView;
     private SebangsaRecyclerViewAdapter adapter;
     private EditText editTextSearch;
@@ -44,18 +44,13 @@ public class FollowingActivity extends AppCompatActivity implements View.OnKeyLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_following);
-
         actionBarSetup();
-
         editTextSearch = (EditText) findViewById(R.id.editText_search);
         editTextSearch.setOnKeyListener(this);
-
         recView = (RecyclerView) findViewById(R.id.rec_list);
         recView.setLayoutManager(new LinearLayoutManager(this));
         recView.addItemDecoration(new SimpleDividerItemDecoration(this));
-
         userList = new ArrayList<User>();
-
         realmService = RealmService.getRealmService(this);
         EventBus.getDefault().register(this);
     }
