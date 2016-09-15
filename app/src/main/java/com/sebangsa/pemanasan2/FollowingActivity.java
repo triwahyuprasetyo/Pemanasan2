@@ -33,8 +33,8 @@ import java.util.List;
 import io.realm.RealmResults;
 
 public class FollowingActivity extends AppCompatActivity implements View.OnKeyListener {
-    public static RealmService realmService;
     private static final String LOG_TAG = "FOLLOWING ACTIVITY";
+    public static RealmService realmService;
     private RecyclerView recView;
     private SebangsaRecyclerViewAdapter adapter;
     private EditText editTextSearch;
@@ -85,7 +85,7 @@ public class FollowingActivity extends AppCompatActivity implements View.OnKeyLi
 
     private void retrieveFollowing() {
         RetrofitService rs = RetrofitService.getRetrofitServiceInstance();
-        rs.retrieveFollowingUsers2();
+        rs.retrieveAllFollowingUsers();
     }
 
     @Subscribe

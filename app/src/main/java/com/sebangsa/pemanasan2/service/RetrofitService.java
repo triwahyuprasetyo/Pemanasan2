@@ -80,7 +80,7 @@ public class RetrofitService {
     public void retrieveAllFollowingUsers() {
         final SebangsaService service = createRetrofitClient();
         subscription = service.getAllFollowingUsers()
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(sebangsaObserver);
     }
