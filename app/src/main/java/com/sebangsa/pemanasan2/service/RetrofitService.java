@@ -27,7 +27,9 @@ public class RetrofitService {
     private static RetrofitService retrofitService;
     private SebangsaService service;
     private Subscription subscription;
+    private Subscription subscriptionSearch;
     private Observer<UserWrapper> sebangsaObserver;
+    private Observer<List<User>> userListObserver;
 
     public RetrofitService() {
         Retrofit retrofit = new Retrofit.Builder()
